@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1D8190">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%231D8190'/%3E%3Ccircle cx='21' cy='11' r='5' fill='%23FDAA07'/%3E%3Cpath d='M8 25C8 16 13 12 22 12C22 21 17 25 8 25Z' fill='%23fff'/%3E%3C/svg%3E">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+<title>Eco Desk Day</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Figtree:wght@400;600&family=Kalam:wght@400;700&display=swap">
+<style>
+/* Team Sahyadri theme, sampled from the team wallpaper: teal sky fading to a warm horizon, layered misty ridges, deep forest green type, a low orange sun.
+   Layout: one phone-width column. Sky hero with brand, tagline and the day's sun arc, three habits, impact card with badges and ticket, seven timed cards, fixed leaf tracker. */
+:root{
+  --bg:#EBF3EA; --surface:#F8FBF6; --fg:#1A3A2E; --muted:#46635A; --line:#C3D8CB;
+  --leaf:#2C7A4C; --leaf-deep:#1B4D36; --sun:#FDAA07; --sky:#D3E9E1; --on-leaf:#FFFFFF;
+  --sky-top:#1D8190; --sky-low:#268593; --on-sky:#FFFFFF;
+  --g1:#268593; --g2:#66AFB0; --g3:#C6DCC8; --g4:#FFEBB0;
+  --m-far:#5FA5B0; --m-mid:#2F7C86; --m-near:#1E5B38; --on-ground:#F2FAF3; --mist:#EAF6EE;
+  --f-display:'Kalam','Segoe Print','Comic Sans MS',cursive;
+  --f-body:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'DM Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#08171A; --surface:#0F2A2B; --fg:#E2F1EA; --muted:#9BB8B0; --line:#1F4343;
+    --leaf:#5CC088; --leaf-deep:#8EDDB2; --sun:#FDB92E; --sky:#14383A; --on-leaf:#07201A;
+    --sky-top:#0A2C38; --sky-low:#0E3A45; --on-sky:#EAF7F1;
+    --g1:#0E3A45; --g2:#16505A; --g3:#24594F; --g4:#6B5E2E;
+    --m-far:#1F5A64; --m-mid:#17454B; --m-near:#0F3326; --on-ground:#E8F4EC; --mist:#9FC9BE;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#08171A; --surface:#0F2A2B; --fg:#E2F1EA; --muted:#9BB8B0; --line:#1F4343;
+  --leaf:#5CC088; --leaf-deep:#8EDDB2; --sun:#FDB92E; --sky:#14383A; --on-leaf:#07201A;
+  --sky-top:#0A2C38; --sky-low:#0E3A45; --on-sky:#EAF7F1;
+  --g1:#0E3A45; --g2:#16505A; --g3:#24594F; --g4:#6B5E2E;
+  --m-far:#1F5A64; --m-mid:#17454B; --m-near:#0F3326; --on-ground:#E8F4EC; --mist:#9FC9BE;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+body{
+  background:var(--bg); color:var(--fg); font-family:var(--f-body); font-size:16px; line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:16px 40px;
+}
+.wrap{max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:26px}
+h1,h2,h3{font-family:var(--f-display); text-wrap:balance; margin:0; line-height:1.1; font-weight:700}
+p{margin:0}
+a{color:var(--leaf-deep)}
+.eyebrow{font-family:var(--f-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--leaf-deep)}
+
+/* sky hero */
+.sky{border-radius:24px; overflow:hidden; background:var(--sky-top)}
+.sky-top{background:linear-gradient(180deg, var(--sky-top), var(--sky-low)); color:var(--on-sky); padding:14px 16px 4px; display:flex; flex-direction:column; gap:10px}
+.brand{display:flex; align-items:center; gap:12px}
+.brand svg{width:44px; height:33px; display:block; flex:none}
+.brand .sep{width:1px; height:26px; background:var(--on-sky); opacity:.55}
+.brand .nm{display:flex; flex-direction:column; line-height:1}
+.brand .nm small{font-size:13px; opacity:.9}
+.brand .nm b{font-family:var(--f-display); font-size:1.25rem; font-weight:700}
+.brand .eyebrow{margin-left:auto; font-size:11px; text-align:right; letter-spacing:.1em}
+.sky .eyebrow{color:var(--on-sky); opacity:.9}
+.titlerow{display:flex; align-items:center; gap:10px}
+.titlerow svg{width:38px; height:38px; flex:none}
+.sky h1{font-size:clamp(1.55rem, 6.4vw, 2.3rem); letter-spacing:-.01em}
+.sky .lede{max-width:46ch; font-size:14px}
+.sky-arc{background:linear-gradient(180deg, var(--g1) 0%, var(--g2) 38%, var(--g3) 68%, var(--g4) 100%)}
+.sky-arc svg{display:block; width:100%; height:auto}
+.arc-under{fill:none; stroke:#0E3A2A; stroke-opacity:.3; stroke-width:4.5; stroke-linecap:round}
+.arc-line{fill:none; stroke:#fff; stroke-width:2; stroke-dasharray:3 6; stroke-linecap:round}
+.m-far{fill:var(--m-far)} .m-mid{fill:var(--m-mid)} .m-near{fill:var(--m-near)} .mist{fill:var(--mist); fill-opacity:.4}
+.stop{fill:var(--surface); stroke:var(--leaf-deep); stroke-width:2}
+.stop.on{fill:var(--leaf); stroke:var(--surface)}
+.hr{font-family:var(--f-mono); font-size:9px; fill:var(--on-ground); text-anchor:middle}
+.sunbody{fill:var(--sun)}
+.sunhalo{fill:var(--sun); fill-opacity:.4; transform-box:fill-box; transform-origin:center; animation:halo 3.2s ease-in-out infinite}
+@keyframes halo{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+
+/* habits */
+.habits{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:16px; display:flex; flex-direction:column; gap:14px}
+.habit-row{display:grid; grid-template-columns:repeat(3, minmax(0,1fr))}
+.habit{display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; font-weight:600; font-size:14px; padding:0 6px}
+.habit+.habit{border-left:1px solid var(--line)}
+.habit svg{width:50px; height:50px; fill:none; stroke:var(--leaf-deep); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
+.habit svg .solid{fill:var(--leaf-deep)}
+.pledge{align-self:center; text-align:center; border:1px solid var(--leaf); border-radius:99px; padding:6px 16px; font-size:14px; font-weight:600; color:var(--leaf-deep)}
+
+.now{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:8px}
+.now .eyebrow{color:var(--muted)}
+.now h2{font-size:1.45rem}
+.link{align-self:flex-start; font:inherit; font-weight:600; color:var(--leaf-deep); background:none; border:0; padding:6px 0; cursor:pointer; text-decoration:underline; text-underline-offset:3px}
+
+/* impact card */
+.impact{background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:18px; display:flex; flex-direction:column; gap:16px}
+.impact-top{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px}
+.impact h2{font-size:1.6rem}
+.seg{display:inline-flex; border:2px solid var(--line); border-radius:99px; padding:3px}
+.seg button{font:inherit; font-size:14px; font-weight:600; border:0; background:transparent; color:var(--muted); padding:6px 14px; border-radius:99px; min-height:36px; cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--leaf); color:var(--on-leaf)}
+.big{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px}
+.stat{background:var(--sky); border-radius:14px; padding:12px 10px; min-width:0}
+.stat .num{display:block; font-family:var(--f-display); font-weight:700; font-size:1.55rem; line-height:1.1; overflow-wrap:anywhere}
+.stat .lab{display:block; font-size:12px; color:var(--muted); margin-top:4px}
+.tally{display:flex; flex-wrap:wrap; gap:8px; margin:0; padding:0; list-style:none}
+.tally li{font-size:14px; border:1px solid var(--line); border-radius:99px; padding:4px 12px; color:var(--muted)}
+.tally li.has{color:var(--fg); border-color:var(--leaf)}
+.meter{display:flex; flex-direction:column; gap:8px}
+.bar{height:10px; background:var(--line); border-radius:99px; overflow:hidden}
+.bar span{display:block; height:100%; width:0; background:var(--leaf); border-radius:99px; transition:width .5s ease}
+.meter p{font-size:14px; color:var(--muted)}
+.badges{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:8px; margin:0; padding:0; list-style:none}
+.badge{display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center; font-size:12px; line-height:1.25; color:var(--muted)}
+.badge svg{width:52px; height:52px}
+.badge .ring{fill:var(--line)} .badge .lf{fill:var(--bg)}
+.badge.on{color:var(--fg)} .badge.on .ring{fill:var(--sun)} .badge.on .lf{fill:var(--leaf-deep)}
+.badge b{font-weight:600}
+.ticket{border:2px dashed var(--leaf); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:8px; background:var(--sky)}
+.ticket h3{font-size:1.4rem}
+.ticket .code{font-family:var(--f-mono); font-size:1.4rem; letter-spacing:.08em; word-break:break-all; user-select:all}
+.ticket .small{font-size:14px; color:var(--muted)}
+.btn{align-self:flex-start; font:inherit; font-weight:600; color:var(--on-leaf); background:var(--leaf); border:0; border-radius:99px; padding:10px 18px; min-height:44px; cursor:pointer}
+.how{font-size:14px; color:var(--muted)}
+.how summary{cursor:pointer; font-weight:600; color:var(--leaf-deep); min-height:32px}
+.how ul{margin:8px 0 0; padding-left:18px; display:flex; flex-direction:column; gap:6px}
+
+/* quiz */
+.quiz{background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:18px; display:flex; flex-direction:column; gap:14px}
+.quiz-top{display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap}
+.quiz h2{font-size:1.6rem}
+.qcount{font-family:var(--f-mono); font-size:12px; color:var(--muted)}
+.qdots{display:flex; gap:6px}
+.qd{width:28px; height:6px; border-radius:99px; background:var(--line)}
+.qd.ok{background:var(--leaf)} .qd.no{background:var(--sun)}
+#qbody{display:flex; flex-direction:column; gap:12px}
+.qintro{color:var(--muted); font-size:15px}
+.big.two{grid-template-columns:repeat(2, minmax(0,1fr))}
+.sum{display:flex; flex-direction:column; gap:12px}
+.stat .lab span{display:inline}
+.qtext{font-weight:600; font-size:1.05rem}
+.opts{display:flex; flex-direction:column; gap:8px}
+.opt{font:inherit; text-align:left; color:var(--fg); background:transparent; border:2px solid var(--line); border-radius:14px; padding:12px 14px; min-height:48px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:10px}
+.opt:not(:disabled):hover{border-color:var(--leaf)}
+.opt:disabled{cursor:default}
+.opt .tag{font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap}
+.opt.right{background:var(--leaf); border-color:var(--leaf); color:var(--on-leaf)}
+.opt.wrong{border-color:var(--sun); background:var(--sky)}
+.qfb{background:var(--sky); border-radius:12px; padding:10px 12px; font-size:14px}
+.qres{display:flex; gap:14px; align-items:center}
+.qres svg{width:56px; height:56px; flex:none}
+.qres p{font-size:14px; color:var(--muted)}
+.qres b{display:block; font-family:var(--f-display); font-size:1.25rem; font-weight:700; color:var(--fg); line-height:1.2}
+.qres .ring{fill:var(--line)} .qres.star .ring{fill:var(--sun)} .qres .st{fill:var(--bg)} .qres.star .st{fill:var(--leaf-deep)}
+
+/* timeline */
+.line{display:flex; flex-direction:column; gap:14px; margin:0; padding:0; list-style:none}
+.slot{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:16px; display:grid; grid-template-columns:88px minmax(0,1fr); gap:6px 16px; align-items:start; scroll-margin-top:12px}
+.slot.current{border-color:var(--leaf); box-shadow:0 0 0 2px var(--leaf)}
+.slot.is-done .art{opacity:.55}
+.art svg{width:88px; height:88px; display:block}
+.body{display:flex; flex-direction:column; gap:8px; min-width:0}
+.meta{display:flex; flex-wrap:wrap; align-items:center; gap:8px}
+.time{font-family:var(--f-mono); font-size:13px; color:var(--leaf-deep)}
+.pill{font-family:var(--f-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; background:var(--leaf); color:var(--on-leaf); padding:2px 8px; border-radius:99px}
+.slot h3{font-size:1.4rem}
+.tip{color:var(--fg)}
+.acts{margin:0; padding-left:18px; color:var(--muted); font-size:15px; display:flex; flex-direction:column; gap:4px}
+.saved{background:var(--sky); border-radius:12px; padding:10px 12px; font-size:14px; color:var(--fg)}
+.done{margin-top:6px; align-self:flex-start; display:inline-flex; align-items:center; gap:10px; font:inherit; font-weight:600; color:var(--fg); background:transparent; border:2px solid var(--line); border-radius:99px; padding:8px 16px 8px 10px; cursor:pointer; min-height:44px}
+.done .box{width:22px; height:22px; border-radius:50%; border:2px solid var(--leaf); display:grid; place-items:center; color:var(--on-leaf)}
+.done .box svg{width:14px; height:14px; opacity:0}
+.done[aria-pressed="true"]{background:var(--leaf); color:var(--on-leaf); border-color:var(--leaf)}
+.done[aria-pressed="true"] .box{background:var(--on-leaf); border-color:var(--on-leaf); color:var(--leaf)}
+.done[aria-pressed="true"] .box svg{opacity:1}
+button:focus-visible, summary:focus-visible{outline:3px solid var(--sun); outline-offset:2px}
+@media (max-width:420px){
+  .slot{grid-template-columns:1fr}
+  .art svg{width:72px; height:72px}
+  .stat .num{font-size:1.3rem}
+  .titlerow svg{width:34px; height:34px}
+}
+
+/* kit + sources */
+.kit h2, .sources h2{font-size:1.6rem; margin-bottom:10px}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin:0; padding:0; list-style:none}
+.chips li{border:1px solid var(--line); background:var(--surface); border-radius:99px; padding:6px 14px; font-size:15px}
+.sources ul{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; font-size:15px}
+.foot{color:var(--muted); font-size:14px}
+
+/* tracker + toast */
+.tracker{position:fixed; left:0; right:0; bottom:0; background:var(--surface); border-top:1px solid var(--line);
+  padding-top:8px; padding-bottom:calc(8px + env(safe-area-inset-bottom, 0px));
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.tracker-in{max-width:680px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:nowrap}
+.tracker .count{font-weight:600; font-size:15px; white-space:nowrap}
+.leaves{display:flex; gap:3px}
+.leaves svg{width:18px; height:18px; fill:var(--line); transition:fill .3s, transform .3s}
+.leaves svg.on{fill:var(--leaf); transform:scale(1.15)}
+.toast{position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom, 0px)); transform:translate(-50%,12px);
+  width:max-content; max-width:min(560px, calc(100% - 32px)); background:var(--fg); color:var(--bg); padding:12px 16px; border-radius:14px;
+  font-weight:600; font-size:15px; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s}
+.toast.show{opacity:1; transform:translate(-50%,0)}
+.confetti{position:fixed; inset:0; width:100%; height:100%; pointer-events:none}
+
+/* illustrations */
+.fl{fill:var(--leaf)} .fd{fill:var(--leaf-deep)} .fs{fill:var(--sun)} .fk{fill:var(--sky)} .ff{fill:var(--fg)} .fsf{fill:var(--surface)}
+.sf{stroke:var(--fg); fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round}
+.ss{stroke:var(--sun); fill:none; stroke-width:4}
+.spin{animation:spin 18s linear infinite; transform-box:fill-box; transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.blink{animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.steam{animation:steam 2.6s ease-in infinite; opacity:0}
+.steam.b{animation-delay:.9s} .steam.c{animation-delay:1.7s}
+@keyframes steam{0%{opacity:0; transform:translateY(4px)}40%{opacity:.8}100%{opacity:0; transform:translateY(-8px)}}
+.hop{animation:hop 2.4s ease-in-out infinite}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.grow{animation:grow 3s ease-in-out infinite; transform-box:fill-box; transform-origin:50% 100%}
+@keyframes grow{0%,100%{transform:scale(.9)}50%{transform:scale(1.08)}}
+.sway{animation:sway 3.4s ease-in-out infinite; transform-box:fill-box; transform-origin:50% 100%}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.drip{animation:drip 2s ease-in infinite; opacity:0}
+.drip.b{animation-delay:1s}
+@keyframes drip{0%{opacity:0; transform:translateY(-8px)}30%{opacity:1}100%{opacity:0; transform:translateY(14px)}}
+.glow{animation:glow 3s ease-in-out infinite; transform-box:fill-box; transform-origin:center}
+@keyframes glow{0%,100%{transform:scale(.92); opacity:.35}50%{transform:scale(1.08); opacity:.7}}
+.twinkle{animation:blink 2.2s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important; transition:none !important}
+  .steam,.drip{opacity:.6}
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="sky">
+    <div class="sky-top">
+      <div class="brand">
+        <svg viewBox="0 0 56 42" role="img" aria-label="Team Sahyadri mark">
+          <circle cx="38" cy="7" r="5" fill="#FDAA07"/>
+          <path d="M3 34 L19 13 L27 23 L34 15 L50 34" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--on-sky)"/>
+          <path d="M26 38 C26 33 30 31 36 31 C36 36 32 38 26 38Z" fill="#7FD3A0"/>
+        </svg>
+        <span class="sep" aria-hidden="true"></span>
+        <span class="nm"><small>Team</small><b>Sahyadri</b></span>
+        <p class="eyebrow">Eco Desk Challenge</p>
+      </div>
+      <div class="titlerow">
+        <svg viewBox="0 0 60 60" aria-hidden="true">
+          <circle cx="38" cy="16" r="11" fill="#FDAA07"/>
+          <path d="M30 50 C30 38 30 30 33 22" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+          <path d="M31 38 C16 40 9 31 11 21 C23 20 31 27 31 38Z" fill="#3FA06A" stroke="#fff" stroke-width="1.5"/>
+          <path d="M32 30 C34 19 43 15 51 18 C50 29 42 33 32 30Z" fill="#2C7A4C" stroke="#fff" stroke-width="1.5"/>
+          <path d="M6 52 Q30 46 56 52" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <h1>Every habit is a tree.</h1>
+      </div>
+      <p class="lede">Seven small switches from 9:00 to 18:00. Follow them through the day, then finish with the quiz.</p>
+    </div>
+    <div class="sky-arc">
+      <svg viewBox="0 0 360 114" role="img" aria-label="Your workday along the sun's path over the Sahyadri ridges, 9:00 to 18:00 with seven stops">
+        <path class="m-far" d="M0 84 L28 68 L56 78 L92 58 L128 74 L166 62 L206 76 L246 60 L286 76 L326 64 L360 72 V114 H0Z"/>
+        <ellipse class="mist" cx="80" cy="82" rx="92" ry="6"/>
+        <ellipse class="mist" cx="272" cy="80" rx="84" ry="5"/>
+        <path class="m-mid" d="M0 96 L36 80 L72 90 L118 74 L158 90 L204 78 L248 92 L294 76 L334 88 L360 82 V114 H0Z"/>
+        <ellipse class="mist" cx="180" cy="95" rx="124" ry="5"/>
+        <path class="m-near" d="M0 104 Q40 96 84 101 T168 100 T252 101 T336 98 T360 101 V114 H0Z"/>
+        <path id="arc-u" class="arc-under" d="M24 94 Q180 -6 336 94"/>
+        <path id="arc" class="arc-line" d="M24 94 Q180 -6 336 94"/>
+        <g id="stops"></g>
+        <g id="hours"></g>
+        <g id="sun"><circle class="sunhalo" r="12"/><circle class="sunbody" r="7"/></g>
+      </svg>
+    </div>
+  </header>
+
+  <section class="habits" aria-label="Our three habits">
+    <p class="eyebrow">Our three habits</p>
+    <div class="habit-row">
+      <div class="habit">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/><rect class="solid" x="16" y="22" width="16" height="12" rx="2"/><path d="M19 22 v-4 a5 5 0 0 1 10 0 v4"/></svg>
+        <span>Lock.</span>
+      </div>
+      <div class="habit">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/><path d="M24 13 V24"/><path d="M17 18 A10 10 0 1 0 31 18"/></svg>
+        <span>Shut down.</span>
+      </div>
+      <div class="habit">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/><rect x="11" y="19.5" width="17" height="9" rx="4.5" transform="rotate(-45 19.5 24)"/><rect x="20" y="19.5" width="17" height="9" rx="4.5" transform="rotate(-45 28.5 24)"/></svg>
+        <span>Link, don&#8217;t attach.</span>
+      </div>
+    </div>
+    <p class="pledge">This month: camera-off internal calls</p>
+  </section>
+
+  <section class="now" aria-live="polite">
+    <p class="eyebrow" id="now-eyebrow">Right now</p>
+    <h2 id="now-title"></h2>
+    <p id="now-tip"></p>
+    <button class="link" id="jump" type="button">Go to this step</button>
+  </section>
+
+  <ol class="line" id="line"></ol>
+
+  <section class="kit">
+    <h2>Your desk kit</h2>
+    <ul class="chips">
+      <li>Steel bottle</li><li>Your own mug</li><li>Steel tiffin and spoon</li><li>One power strip</li>
+      <li>Desk plant</li><li>Scrap-paper pad</li><li>Cloth napkin</li><li>Dry and wet bins</li>
+    </ul>
+  </section>
+
+  <section class="quiz" aria-labelledby="quiz-h">
+    <div class="quiz-top">
+      <h2 id="quiz-h">Finish with the energy quiz</h2>
+      <span class="qcount" id="qcount">5 questions</span>
+    </div>
+    <div class="qdots" id="qdots" aria-hidden="true"></div>
+    <div id="qbody"></div>
+  </section>
+
+  <section class="impact" id="reward" aria-labelledby="reward-h">
+    <h2 id="reward-h">Your reward</h2>
+    <div class="meter">
+      <div class="bar"><span id="bar"></span></div>
+      <p id="next"></p>
+    </div>
+    <ol class="badges" id="badges"></ol>
+    <div class="ticket" id="ticket" hidden>
+      <p class="eyebrow">Reward unlocked</p>
+      <h3>Eco Champion ticket</h3>
+      <p class="code" id="code"></p>
+      <p class="small" id="ticket-date"></p>
+      <p class="small" id="prize-note"></p>
+      <button type="button" class="btn" id="copy">Copy code</button>
+    </div>
+    <div class="sum">
+      <p class="eyebrow">What your desk can save today</p>
+      <p class="qintro">Follow all seven steps and your desk saves about this much.</p>
+      <div class="big two">
+        <div class="stat"><span class="num" id="sum-l">0</span><span class="lab">Laptop desk: <span id="sum-ll"></span></span></div>
+        <div class="stat"><span class="num" id="sum-d">0</span><span class="lab">Desktop desk: <span id="sum-dl"></span></span></div>
+      </div>
+      <ul class="tally"><li class="has">2 disposable cups skipped</li><li class="has">5 sheets saved</li><li class="has">1 meal pack skipped</li><li class="has">200 ml water reused</li></ul>
+    </div>
+    <details class="how">
+      <summary>How these numbers are worked out</summary>
+      <ul>
+        <li>Grid: 0.727 kg of CO&#8322; per kWh, India's weighted average for 2023-24 reported by the Central Electricity Authority.</li>
+        <li>Laptop 35 W and desktop with screen 100 W, inside the usual 20-50 W and 60-200 W ranges. Shutting down for 6 hours saves that much.</li>
+        <li>Screen: one modern 24-inch ENERGY STAR monitor draws about 12.5 W on and 0.12 W asleep. We count one hour at lunch.</li>
+        <li>Morning light: an 18 W LED fitting kept off for 3 hours. This is our assumption, so change it to match your office.</li>
+        <li>Paper: about 18.6 g of CO&#8322; per A4 sheet. Double-sided on a 10-page print saves 5 sheets.</li>
+        <li>Cups, water and meal packs are example amounts. These are estimates, not meter readings.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="sources">
+    <h2>Where the facts come from</h2>
+    <ul>
+      <li><a href="https://www.energy.gov/energysaver/energy-efficient-computers-home-office-equipment-and-electronics" target="_blank" rel="noopener">U.S. Department of Energy: computers and office equipment</a> for sleep and shutdown timing, power strips, standby and screen savers.</li>
+      <li><a href="https://solarquarter.com/2025/01/06/co2-baseline-database-highlights-indias-progress-in-renewable-energy-and-emission-reduction-cea/" target="_blank" rel="noopener">CEA CO&#8322; baseline database report</a> for the India grid factor.</li>
+      <li><a href="https://www.bijlibachao.com/appliances/laptop-and-desktop-energy-comparison.html" target="_blank" rel="noopener">Bijli Bachao: laptop and desktop energy use</a> for typical watts.</li>
+      <li><a href="https://www.energystar.gov/productfinder/product/certified-displays/details/2386157" target="_blank" rel="noopener">ENERGY STAR certified display listing</a> for monitor on and sleep power.</li>
+      <li><a href="https://manual.celiveo.com/24e/en/topic/environmental-impacts-of-printing-formula-used-in-tgs-10-reports" target="_blank" rel="noopener">Print impact formula</a> for CO&#8322; per sheet of paper.</li>
+      <li><a href="https://eparlib.nic.in/bitstream/123456789/803193/1/AU2613.pdf" target="_blank" rel="noopener">Government of India reply in Parliament</a> for AC settings: about 6% saved per 1&#176;C, and the 24-26&#176;C range.</li>
+      <li><a href="https://www.energy.gov/energysaver/led-lighting" target="_blank" rel="noopener">U.S. Department of Energy: LED lighting</a> for LED energy use.</li>
+      <li><a href="https://en.wikipedia.org/wiki/Standby_power" target="_blank" rel="noopener">Wikipedia: standby power</a> for the share of household use.</li>
+    </ul>
+  </section>
+
+  <p class="foot">Team Sahyadri, Eco Desk Challenge. Your best score and ticket are saved on this phone and reset each morning. Scan the code again tomorrow and run the day from the top.</p>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var PRIZE_NOTE='Show this screen to Team Sahyadri to claim your reward.';
+  var GRID_G=727, BULB_KW=0.009, PAPER_G=18.6;
+  var LEVELS=[{n:1,name:'First leaf'},{n:3,name:'Sprout'},{n:4,name:'Sapling'},{n:5,name:'Eco Champion'}];
+
+  var art = {
+    sun:'<svg viewBox="0 0 96 96" role="img" aria-label="Sunlight through a window"><rect class="fk" x="14" y="12" width="68" height="72" rx="4"/><circle class="ss spin" cx="48" cy="44" r="22" stroke-dasharray="4 9"/><circle class="fs" cx="48" cy="44" r="12"/><path class="fl" d="M14 70 Q34 56 52 66 T82 62 V84 H14Z"/><rect class="sf" x="14" y="12" width="68" height="72" rx="4"/><path class="sf" d="M48 12V84M14 48H82"/></svg>',
+    plug:'<svg viewBox="0 0 96 96" role="img" aria-label="Power strip with a green light"><path class="sf" d="M10 50 Q4 50 4 40 V30"/><rect class="fd" x="14" y="38" width="72" height="26" rx="8"/><rect class="fsf" x="24" y="46" width="12" height="10" rx="2"/><rect class="fsf" x="42" y="46" width="12" height="10" rx="2"/><rect class="fsf" x="60" y="46" width="12" height="10" rx="2"/><circle class="fs blink" cx="78" cy="44" r="3.5"/><path class="sf" d="M30 22 V32 M42 22 V32 M36 32 V38" /><rect class="fs" x="26" y="14" width="20" height="9" rx="3"/></svg>',
+    mug:'<svg viewBox="0 0 96 96" role="img" aria-label="A reusable mug"><path class="sf steam" d="M30 38 q-4 -6 0 -12 q4 -6 0 -12"/><path class="sf steam b" d="M42 38 q-4 -6 0 -12 q4 -6 0 -12"/><path class="sf steam c" d="M54 38 q-4 -6 0 -12 q4 -6 0 -12"/><rect class="fl" x="22" y="44" width="40" height="38" rx="8"/><path class="sf" d="M62 54 H70 Q78 54 78 62 Q78 70 70 70 H62"/><rect class="sf" x="22" y="44" width="40" height="38" rx="8"/><path class="fsf" d="M30 56 H54 V62 H30Z"/></svg>',
+    tiffin:'<svg viewBox="0 0 96 96" role="img" aria-label="A steel tiffin"><g class="hop"><rect class="fk" x="26" y="26" width="44" height="18" rx="5"/><rect class="sf" x="26" y="26" width="44" height="18" rx="5"/></g><rect class="fl" x="26" y="46" width="44" height="18" rx="5"/><rect class="sf" x="26" y="46" width="44" height="18" rx="5"/><rect class="fd" x="26" y="66" width="44" height="18" rx="5"/><rect class="sf" x="26" y="66" width="44" height="18" rx="5"/><path class="sf" d="M34 26 Q48 6 62 26"/><path class="sf" d="M20 22 V88 M76 22 V88" /></svg>',
+    paper:'<svg viewBox="0 0 96 96" role="img" aria-label="A sheet of paper with a leaf growing from it"><rect class="fsf" x="24" y="12" width="48" height="68" rx="5"/><rect class="sf" x="24" y="12" width="48" height="68" rx="5"/><path class="sf" d="M32 24 H64 M32 33 H56"/><g class="grow"><path class="fl" d="M48 76 C32 66 34 50 50 42 C60 54 60 66 48 76Z"/></g><path class="sf" d="M48 76 V58"/></svg>',
+    plant:'<svg viewBox="0 0 96 96" role="img" aria-label="A desk plant being watered"><path class="fs drip" d="M30 8 q4 6 0 10 q-4 -4 0 -10Z"/><path class="fs drip b" d="M64 6 q4 6 0 10 q-4 -4 0 -10Z"/><g class="sway"><path class="sf" d="M48 66 V36"/><ellipse class="fl" cx="34" cy="42" rx="14" ry="7" transform="rotate(-28 34 42)"/><ellipse class="fd" cx="62" cy="38" rx="14" ry="7" transform="rotate(28 62 38)"/><ellipse class="fl" cx="48" cy="28" rx="6" ry="11"/></g><path class="fs" d="M30 62 H66 L61 86 H35Z"/><path class="sf" d="M30 62 H66 L61 86 H35Z"/></svg>',
+    power:'<svg viewBox="0 0 96 96" role="img" aria-label="A power button and a night sky"><circle class="fl glow" cx="48" cy="50" r="32"/><circle class="fsf" cx="48" cy="50" r="24"/><circle class="sf" cx="48" cy="50" r="24"/><path class="sf" d="M48 32 V48"/><path class="sf" d="M37 38 A16 16 0 1 0 59 38"/><circle class="fs twinkle" cx="12" cy="16" r="3"/><circle class="fs twinkle" cx="84" cy="22" r="2.5" style="animation-delay:.7s"/><circle class="fs twinkle" cx="80" cy="84" r="3" style="animation-delay:1.3s"/></svg>'
+  };
+
+  var slots = [
+    {t:9,    label:'09:00', title:'Let the daylight in', art:'sun',
+     tip:'Open the blinds and keep the lights off until you really need them.',
+     acts:['Walk, cycle or share a ride in when you can','Bring your own bottle and mug']},
+    {t:9.25, label:'09:15', title:'Power up smart', art:'plug',
+     tip:'Plug the monitor, charger and lamp into one power strip.',
+     acts:['Lower the brightness and switch on battery saver','Skip the screen saver and let the screen sleep instead']},
+    {t:10.5, label:'10:30', title:'Refill, don’t toss', art:'mug',
+     tip:'Use your own mug and bottle for every drink today.',
+     acts:['Rinse your mug at the pantry sink','Say no to paper and plastic cups']},
+    {t:12.5, label:'12:30', title:'Lunch without waste', art:'tiffin',
+     tip:'Carry a steel tiffin and your own spoon.',
+     acts:['Lock your screen, and let it sleep if you will be away over 20 minutes','Take a short walk outside']},
+    {t:14.5, label:'14:30', title:'Link, don’t attach', art:'paper',
+     tip:'Share a link or your screen first. Print only when you must.',
+     acts:['If you do print, go double-sided','Jot notes on the back of used sheets']},
+    {t:16,   label:'16:00', title:'Water the desk plant', art:'plant',
+     tip:'Give the plant the last sip from your bottle.',
+     acts:['Stretch and open a window if the air allows','Keep internal calls camera-off this month, our team pledge']},
+    {t:17.5, label:'17:30', title:'Shut down for real', art:'power',
+     tip:'Close your apps and shut your computer down.',
+     acts:['Unplug chargers and switch off the power strip','Sort leftovers into the dry and wet bins']}
+  ];
+
+  function fmtE(k){ return k<0.1 ? Math.round(k*1000)+' Wh' : k.toFixed(2)+' kWh'; }
+  function fmtG(g){ return g>=1000 ? (g/1000).toFixed(2)+' kg' : Math.round(g)+' g'; }
+  function ep(k){ return 'about '+fmtE(k)+' of electricity ('+fmtG(k*GRID_G)+' of CO₂)'; }
+
+  // what each step saves (estimates; see "How these numbers are worked out")
+  var K_LIGHT=0.018*3, K_SCREEN=(12.48-0.12)/1000, K_LAPTOP=0.035*6, K_DESKTOP=0.1*6, SHEETS=5;
+  function savingLine(i){
+    switch(i){
+      case 0: return 'Saves '+ep(K_LIGHT)+' with an 18 W LED light kept off for 3 hours.';
+      case 1: return 'Cuts the draw all day. It depends on your screen, so there is no number here.';
+      case 2: return 'Skips about two disposable cups today.';
+      case 3: return 'Saves '+ep(K_SCREEN)+' when the screen sleeps for an hour, and keeps one disposable meal pack out of the bin.';
+      case 4: return 'Saves '+SHEETS+' A4 sheets on a 10-page print, about '+fmtG(SHEETS*PAPER_G)+' of CO₂ from paper.';
+      case 5: return 'Reuses about 200 ml of water that would be poured away.';
+      case 6: return 'Over 6 hours off, a laptop saves '+ep(K_LAPTOP)+' and a desktop with screen saves '+ep(K_DESKTOP)+'.';
+    }
+  }
+
+  // storage helpers
+  function dayKey(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+  function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  var daysDone=[]; try{ var dd=JSON.parse(lsGet('ecodesk-days')||'[]'); if(Array.isArray(dd)) daysDone=dd; }catch(e){}
+
+  function hourNow(){ var d=new Date(); return d.getHours()+d.getMinutes()/60; }
+  function currentIndex(h){ var idx=-1; slots.forEach(function(s,i){ if(h>=s.t) idx=i; }); return idx; }
+  function levelCount(n){ var c=0; LEVELS.forEach(function(l){ if(n>=l.n) c++; }); return c; }
+
+  // step cards
+  var line=document.getElementById('line');
+  slots.forEach(function(s,i){
+    var li=document.createElement('li');
+    li.className='slot'; li.id='slot-'+i;
+    li.innerHTML=
+      '<div class="art">'+art[s.art]+'</div>'+
+      '<div class="body">'+
+        '<div class="meta"><span class="time">'+s.label+'</span><span class="pill" hidden>Now</span></div>'+
+        '<h3>'+s.title+'</h3>'+
+        '<p class="tip">'+s.tip+'</p>'+
+        '<ul class="acts"><li>'+s.acts[0]+'</li><li>'+s.acts[1]+'</li></ul>'+
+        '<p class="saved">'+savingLine(i)+'</p>'+
+      '</div>';
+    line.appendChild(li);
+  });
+
+  // badges
+  function badgeSvg(level){
+    var cnt=level+1, sc=[0.8,0.7,0.6,0.5][level], size=16*sc, gap=2, total=cnt*size+(cnt-1)*gap, x0=24-total/2, p='';
+    for(var j=0;j<cnt;j++){ p+='<path class="lf" transform="translate('+(x0+j*(size+gap)-4*sc).toFixed(2)+' '+(24-12*sc).toFixed(2)+') scale('+sc+')" d="M4 20C4 10 10 4 20 4C20 14 14 20 4 20Z"/>'; }
+    return '<svg viewBox="0 0 48 48" aria-hidden="true"><circle class="ring" cx="24" cy="24" r="22"/>'+p+'</svg>';
+  }
+  var badgesEl=document.getElementById('badges');
+  LEVELS.forEach(function(l,idx){
+    var li=document.createElement('li'); li.className='badge'; li.id='badge-'+idx;
+    li.innerHTML=badgeSvg(idx)+'<b>'+l.name+'</b><span>'+l.n+(l.n===1?' right':' right')+'</span>';
+    badgesEl.appendChild(li);
+  });
+
+  // sun arc
+  var arc=document.getElementById('arc'), L=arc.getTotalLength();
+  function pt(h){ var t=Math.min(1,Math.max(0,(h-9)/9)); return arc.getPointAtLength(L*t); }
+  var NS='http://www.w3.org/2000/svg', stopsG=document.getElementById('stops'), hoursG=document.getElementById('hours');
+  slots.forEach(function(s,i){
+    var p=pt(s.t), c=document.createElementNS(NS,'circle');
+    c.setAttribute('cx',p.x); c.setAttribute('cy',p.y); c.setAttribute('r',5); c.setAttribute('class','stop');
+    stopsG.appendChild(c);
+  });
+  [[9,'9:00'],[12,'12:00'],[15,'15:00'],[18,'18:00']].forEach(function(a){
+    var p=pt(a[0]), t=document.createElementNS(NS,'text');
+    t.setAttribute('x',p.x); t.setAttribute('y',110); t.setAttribute('class','hr'); t.textContent=a[1];
+    hoursG.appendChild(t);
+  });
+
+  // toast + confetti
+  var toastEl=document.getElementById('toast'), toastT=null;
+  function toast(msg){
+    toastEl.textContent=msg; toastEl.classList.add('show');
+    clearTimeout(toastT); toastT=setTimeout(function(){ toastEl.classList.remove('show'); }, 4200);
+  }
+  function confetti(n){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var cs=getComputedStyle(document.documentElement);
+    var cols=['--leaf','--sun','--leaf-deep','--g2'].map(function(v){ return cs.getPropertyValue(v).trim()||'#2C7A4C'; });
+    var cv=document.createElement('canvas'); cv.className='confetti';
+    var dpr=window.devicePixelRatio||1, W=window.innerWidth, H=window.innerHeight;
+    cv.width=W*dpr; cv.height=H*dpr; document.body.appendChild(cv);
+    var ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
+    var ps=[]; for(var i=0;i<n;i++){
+      ps.push({x:W/2+(Math.random()-.5)*80, y:H*0.7, vx:(Math.random()-.5)*10, vy:-(6+Math.random()*9), s:5+Math.random()*6, r:Math.random()*6, vr:(Math.random()-.5)*.4, c:cols[i%cols.length]});
+    }
+    var t0=performance.now();
+    (function frame(now){
+      var el=now-t0; ctx.clearRect(0,0,W,H);
+      ps.forEach(function(p){
+        p.vy+=0.28; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.globalAlpha=Math.max(0,1-el/1700);
+        ctx.fillStyle=p.c; ctx.fillRect(-p.s/2,-p.s/3,p.s,p.s*0.6); ctx.restore();
+      });
+      if(el<1700) requestAnimationFrame(frame); else cv.remove();
+    })(t0);
+  }
+
+  // ---------- quiz ----------
+  var POOL=[
+    {q:"Your office AC is set at 22°C. Raising it by 1°C saves about how much electricity?", o:["About 6%","About 1%","About 25%"], e:"The Government of India says each 1°C rise saves about 6%."},
+    {q:"You raise an office AC from 20°C to 24°C. About how much electricity does that save?", o:["About 24%","About 4%","About 60%"], e:"The Government's reply in Parliament puts it at about 24%."},
+    {q:"Which AC temperature range do BEE guidelines recommend?", o:["24-26°C","18-20°C","28-30°C"], e:"The Government's reply in Parliament cites the 24-26°C range from BEE's voluntary guidelines."},
+    {q:"How much less energy do ENERGY STAR LEDs use than old incandescent bulbs?", o:["At least 75% less","About 10% less","About the same"], e:"The U.S. Department of Energy says at least 75% less."},
+    {q:"How much longer can ENERGY STAR LEDs last than old bulbs?", o:["Up to 25 times longer","About twice as long","No longer"], e:"The Department of Energy says up to 25 times longer."},
+    {q:"You are away from your desk for 40 minutes. What should your monitor do?", o:["Go to sleep","Run a screen saver","Stay at full brightness"], e:"The Department of Energy advises monitor sleep for breaks over 20 minutes."},
+    {q:"You will be away from your computer for 3 hours. What is the best move?", o:["Switch off the computer and monitor","Leave it on standby","Turn the brightness up"], e:"For breaks over 2 hours the Department of Energy advises switching both off."},
+    {q:"Does a screen saver save energy?", o:["No, it can even use more","Yes, a lot","Only on laptops"], e:"Screen savers do not save energy and can stop the screen from powering down."},
+    {q:"How much power does an ENERGY STAR monitor draw in sleep mode?", o:["2 W or less","20 W","60 W"], e:"The Department of Energy says 2 W or less, and 1 W or less when switched off."},
+    {q:"ENERGY STAR computers use how much less energy than unlabeled ones?", o:["30-65%","5-10%","Over 90%"], e:"The Department of Energy says 30-65% less, depending on use."},
+    {q:"Which usually draws less power, a laptop or a desktop PC with its screen?", o:["The laptop","The desktop","They are identical"], e:"Typical figures are 20-50 W for a laptop and 60-200 W for a desktop."},
+    {q:"Compared with old CRT screens, LCD screens can save up to how much electricity?", o:["Up to 75%","Up to 5%","Nothing"], e:"Bijli Bachao says LCD screens can save up to 75% against CRT screens."},
+    {q:"Chargers, monitors and printers keep sipping power when idle. A simple fix is to...", o:["Switch off the power strip they share","Leave them plugged in","Cover them with a cloth"], e:"A switched-off power strip cuts these standby loads. Unplug chargers you are not using."},
+    {q:"Estimates put standby modes at roughly what share of household electricity use?", o:["About 3-10%","About 40%","Under 0.5%"], e:"Figures cited on Wikipedia's standby power page are 3-10% before regulation, and 8% for UK homes in 2004."},
+    {q:"ENERGY STAR power-management features on a computer are usually...", o:["Off by default, so you must switch them on","Already on and impossible to change","Only found on laptops"], e:"The Department of Energy says they are usually off by default and must be enabled in your operating system."},
+    {q:"Besides saving electricity, switching off a PC also reduces...", o:["The building's cooling load","Wi-Fi speed","Paper use"], e:"PCs give off heat, so powering them down also eases cooling."},
+    {q:"Roughly how much CO₂ does one kWh of Indian grid electricity release?", o:["About 0.7 kg","About 0.07 kg","About 7 kg"], e:"The CEA average for 2023-24 is 0.727 kg per kWh."},
+    {q:"You print a 10-page file double-sided. How many A4 sheets do you use?", o:["5","10","20"], e:"Two pages go on each sheet, so you use half as many."},
+    {q:"By one print-impact formula, making one A4 sheet of paper releases about how much CO₂?", o:["About 18 g","About 180 g","About 1.8 g"], e:"The formula gives about 18.6 g per sheet, counting production and lost tree absorption."},
+    {q:"Shutting down a 100 W desktop for 6 hours saves about how much electricity?", o:["0.6 kWh","6 kWh","0.06 kWh"], e:"100 W for 6 hours is 600 Wh, or 0.6 kWh."},
+    {q:"That 0.6 kWh is about how much CO₂ on India's grid (0.727 kg per kWh)?", o:["About 440 g","About 4 g","About 4 kg"], e:"0.6 × 0.727 kg is about 0.44 kg."}
+  ];
+  var N_Q=5, seenKey='ecodesk-seen-'+dayKey(), bestKey='ecodesk-best-'+dayKey();
+  var best=parseInt(lsGet(bestKey)||'0',10)||0;
+  var att={phase:'intro', qs:[], ans:[], i:0};
+  var seenAll=[]; try{ var sv0=JSON.parse(lsGet(seenKey)||'[]'); if(Array.isArray(sv0)) seenAll=sv0; }catch(e){}
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function newAttempt(){
+    var seen=seenAll;
+    var all=POOL.map(function(_,i){ return i; });
+    var fresh=all.filter(function(i){ return seen.indexOf(i)<0; });
+    if(fresh.length<N_Q){ seen=[]; fresh=all.slice(); }
+    var pick=shuffle(fresh).slice(0,N_Q);
+    seenAll=seen.concat(pick); lsSet(seenKey, JSON.stringify(seenAll));
+    att.qs=pick.map(function(pi){
+      var p=POOL[pi];
+      return {q:p.q, e:p.e, o:shuffle(p.o.map(function(t,j){ return {t:t, ok:j===0}; }))};
+    });
+    att.ans=[]; for(var k=0;k<N_Q;k++) att.ans.push(-1);
+    att.i=0; att.phase='q';
+  }
+  function score(){ var s=0; att.qs.forEach(function(q,i){ if(att.ans[i]>=0 && q.o[att.ans[i]].ok) s++; }); return s; }
+  function starSvg(){
+    var p=[]; for(var i=0;i<10;i++){ var r=i%2?7:16, a=(-90+i*36)*Math.PI/180; p.push((24+r*Math.cos(a)).toFixed(1)+','+(24+r*Math.sin(a)).toFixed(1)); }
+    return '<svg viewBox="0 0 48 48" aria-hidden="true"><circle class="ring" cx="24" cy="24" r="22"/><polygon class="st" points="'+p.join(' ')+'"/></svg>';
+  }
+  function levelName(n){ var nm=''; LEVELS.forEach(function(l){ if(n>=l.n) nm=l.name; }); return nm; }
+
+  function renderQuiz(){
+    var body=document.getElementById('qbody'), dots=document.getElementById('qdots'), cnt=document.getElementById('qcount');
+    dots.innerHTML='';
+    if(att.phase==='intro'){
+      cnt.textContent=N_Q+' questions';
+      body.innerHTML='<p class="qintro">Finish your day with five quick questions. You get new questions, in a new order, every time you play.</p>'+
+        (best>0?'<p class="qintro">Your best today: '+best+' out of '+N_Q+'.</p>':'')+
+        '<button type="button" class="btn" id="qstart">Start the quiz</button>';
+      return;
+    }
+    att.qs.forEach(function(q,i){ var sp=document.createElement('span'); sp.className='qd'+(att.ans[i]<0?'':(q.o[att.ans[i]].ok?' ok':' no')); dots.appendChild(sp); });
+    if(att.phase==='result'){
+      var sc=score(); cnt.textContent='Finished';
+      var msg= sc===N_Q ? 'Eco Champion! '+sc+' out of '+N_Q+'.' : (sc>=3 ? levelName(sc)+' level, '+sc+' out of '+N_Q+'.' : 'You got '+sc+' out of '+N_Q+'.');
+      var extra= sc===N_Q ? 'Your ticket is unlocked in the reward section below.' : 'Play again for new questions and a better score.';
+      body.innerHTML='<div class="qres'+(sc===N_Q?' star':'')+'">'+starSvg()+'<div><b>'+msg+'</b><p>Best today: '+best+' out of '+N_Q+'.</p><p>'+extra+'</p></div></div>'+
+        '<button type="button" class="btn" id="qretry">'+(sc===N_Q?'Play again':'Try 5 new questions')+'</button>';
+      return;
+    }
+    var q=att.qs[att.i], answered=att.ans[att.i]>=0;
+    cnt.textContent='Question '+(att.i+1)+' of '+N_Q;
+    var h='<p class="qtext" id="qtext">'+q.q+'</p><div class="opts" role="group" aria-labelledby="qtext">';
+    q.o.forEach(function(op,j){
+      var cls='opt', tag='';
+      if(answered){
+        if(op.ok){ cls+=' right'; tag='<span class="tag">Correct</span>'; }
+        else if(j===att.ans[att.i]){ cls+=' wrong'; tag='<span class="tag">Not quite</span>'; }
+      }
+      h+='<button type="button" class="'+cls+'" data-o="'+j+'"'+(answered?' disabled':'')+'><span>'+op.t+'</span>'+tag+'</button>';
+    });
+    h+='</div>';
+    if(answered){ h+='<p class="qfb" role="status">'+q.e+'</p><button type="button" class="btn" id="qnext">'+(att.i<N_Q-1?'Next question':'See my result')+'</button>'; }
+    body.innerHTML=h;
+  }
+
+  // ---------- reward ----------
+  var ticketCode=null;
+  function getTicket(){
+    if(ticketCode) return ticketCode;
+    var k='ecodesk-ticket-'+dayKey(), c=lsGet(k);
+    if(!c){
+      var chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r='';
+      for(var i=0;i<4;i++) r+=chars.charAt(Math.floor(Math.random()*chars.length));
+      var d=new Date(), mm=('0'+(d.getMonth()+1)).slice(-2), dd=('0'+d.getDate()).slice(-2);
+      c='SAH-'+dd+mm+'-'+r; lsSet(k,c);
+    }
+    ticketCode=c; return c;
+  }
+  function renderReward(){
+    document.getElementById('bar').style.width=(best/N_Q*100)+'%';
+    var nxt=null; LEVELS.forEach(function(l){ if(!nxt && best<l.n) nxt=l; });
+    var streak = daysDone.length ? ' Days as Eco Champion so far: '+daysDone.length+'.' : '';
+    document.getElementById('next').textContent = (best===0 ? 'Take the quiz above to earn your first leaf.' : 'Best today: '+best+' out of '+N_Q+'.') +
+      (nxt && best>0 ? ' Next reward: '+nxt.name+', get '+nxt.n+' right in one go.' : '') + (!nxt ? ' All rewards unlocked today.' : '') + streak;
+    LEVELS.forEach(function(l,idx){ document.getElementById('badge-'+idx).classList.toggle('on', best>=l.n); });
+    var tk=document.getElementById('ticket'); tk.hidden = best<N_Q;
+    if(best>=N_Q){
+      document.getElementById('code').textContent=getTicket();
+      document.getElementById('ticket-date').textContent='Earned on '+new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+      document.getElementById('prize-note').textContent=PRIZE_NOTE;
+    }
+  }
+  // static "what your desk can save" summary
+  (function(){
+    var base=K_LIGHT+K_SCREEN, paperG=SHEETS*PAPER_G;
+    function fill(id,lid,kwh){
+      var total=base+kwh;
+      document.getElementById(id).textContent=fmtE(total);
+      document.getElementById(lid).textContent=fmtG(total*GRID_G+paperG)+' of CO₂, and a 9 W LED bulb lit for '+Math.round(total/BULB_KW)+' hours';
+    }
+    fill('sum-l','sum-ll',K_LAPTOP); fill('sum-d','sum-dl',K_DESKTOP);
+  })();
+
+  // ---------- events ----------
+  document.getElementById('qbody').addEventListener('click', function(e){
+    var o=e.target.closest('.opt');
+    if(o && att.phase==='q' && att.ans[att.i]<0){
+      var j=+o.dataset.o, right=att.qs[att.i].o[j].ok;
+      att.ans[att.i]=j; renderQuiz();
+      if(right){ toast('Correct!'); confetti(24); } else { toast('Not quite. The answer is below.'); }
+      return;
+    }
+    if(e.target.closest('#qstart') || e.target.closest('#qretry')){ newAttempt(); renderQuiz(); return; }
+    if(e.target.closest('#qnext')){
+      if(att.i<N_Q-1){ att.i++; renderQuiz(); return; }
+      var s=score(), prev=best; att.phase='result';
+      if(s>best){ best=s; lsSet(bestKey,String(best)); }
+      if(best===N_Q && daysDone.indexOf(dayKey())<0){ daysDone.push(dayKey()); lsSet('ecodesk-days', JSON.stringify(daysDone)); }
+      renderQuiz(); renderReward();
+      if(s===N_Q){ toast('Eco Champion! Your ticket is unlocked below.'); confetti(170); }
+      else if(levelCount(best)>levelCount(prev)){ toast('New badge: '+levelName(best)+'. See your reward below.'); confetti(70); }
+      else { toast('You scored '+s+' out of '+N_Q+'.'); }
+    }
+  });
+  document.getElementById('jump').addEventListener('click', function(){
+    var i=+this.dataset.i, el=document.getElementById('slot-'+i);
+    if(el){ var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches; el.scrollIntoView({behavior: rm?'auto':'smooth', block:'start'}); }
+  });
+  document.getElementById('copy').addEventListener('click', function(){
+    var btn=this, code=getTicket();
+    function ok(){ btn.textContent='Copied'; setTimeout(function(){ btn.textContent='Copy code'; }, 1800); }
+    function fallback(){
+      var r=document.createRange(); r.selectNodeContents(document.getElementById('code'));
+      var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent='Selected, press copy';
+    }
+    try{ navigator.clipboard.writeText(code).then(ok, fallback); }catch(e){ fallback(); }
+  });
+
+  // ---------- clock-driven bits ----------
+  function render(){
+    var h=hourNow(), idx=currentIndex(h);
+    var sp=pt(h); document.getElementById('sun').setAttribute('transform','translate('+sp.x+' '+sp.y+')');
+    slots.forEach(function(s,i){
+      var li=document.getElementById('slot-'+i), isNow=(i===idx && h<19);
+      li.classList.toggle('current', isNow);
+      li.querySelector('.pill').hidden=!isNow;
+    });
+    var title=document.getElementById('now-title'), tip=document.getElementById('now-tip'), eb=document.getElementById('now-eyebrow'), jump=document.getElementById('jump'), target;
+    if(h<9){ target=0; eb.textContent='Up next'; title.textContent=slots[0].title; tip.textContent='Your day starts at 9:00. '+slots[0].tip; }
+    else if(h>=19){ target=-1; eb.textContent='Day finished'; title.textContent='That is the day.'; tip.textContent='Take the quiz at the end of the page to collect your reward.'; }
+    else { target=idx; eb.textContent='Right now'; title.textContent=slots[idx].title; tip.textContent=slots[idx].tip; }
+    jump.hidden=(target<0); jump.dataset.i=target;
+  }
+
+  renderQuiz();
+  renderReward();
+  render();
+  setInterval(render, 60000);
+})();
+</script>
+
+</body>
+</html>
