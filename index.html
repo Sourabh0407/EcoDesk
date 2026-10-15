@@ -43,11 +43,12 @@
 [hidden]{display:none !important}
 body{
   background:var(--bg); color:var(--fg); font-family:var(--f-body); font-size:16px; line-height:1.5;
-  padding-left:max(16px, env(safe-area-inset-left, 0px));
-  padding-right:max(16px, env(safe-area-inset-right, 0px));
-  padding-block:16px 40px;
+  padding-left:max(clamp(16px,3vw,48px), env(safe-area-inset-left, 0px));
+  padding-right:max(clamp(16px,3vw,48px), env(safe-area-inset-right, 0px));
+  padding-block:clamp(16px,2vw,32px) 90px;
+  min-height:100vh; min-height:100dvh;
 }
-.wrap{max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:26px}
+.wrap{width:100%; max-width:1440px; margin:0 auto; display:flex; flex-direction:column; gap:26px}
 h1,h2,h3{font-family:var(--f-display); text-wrap:balance; margin:0; line-height:1.1; font-weight:700}
 p{margin:0}
 a{color:var(--leaf-deep)}
@@ -66,8 +67,8 @@ a{color:var(--leaf-deep)}
 .sky .eyebrow{color:var(--on-sky); opacity:.9}
 .titlerow{display:flex; align-items:center; gap:10px}
 .titlerow svg{width:38px; height:38px; flex:none}
-.sky h1{font-size:clamp(1.55rem, 6.4vw, 2.3rem); letter-spacing:-.01em}
-.sky .lede{max-width:46ch; font-size:14px}
+.sky h1{font-size:clamp(1.55rem, 4vw, 3.2rem); letter-spacing:-.01em}
+.sky .lede{max-width:60ch; font-size:clamp(14px,1.2vw,17px)}
 .sky-arc{background:linear-gradient(180deg, var(--g1) 0%, var(--g2) 38%, var(--g3) 68%, var(--g4) 100%)}
 .sky-arc svg{display:block; width:100%; height:auto}
 .arc-under{fill:none; stroke:#0E3A2A; stroke-opacity:.3; stroke-width:4.5; stroke-linecap:round}
@@ -183,6 +184,27 @@ button:focus-visible, summary:focus-visible{outline:3px solid var(--sun); outlin
   .titlerow svg{width:34px; height:34px}
 }
 
+
+/* full-screen responsive layout */
+.sky-top{padding:clamp(14px,2vw,28px) clamp(16px,3vw,40px) 4px}
+@media (min-width:900px){
+  .wrap{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:24px; align-items:start}
+  .wrap > .sky, .wrap > .line{grid-column:1 / -1}
+  .wrap > section{height:100%}
+  .line{display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%,440px),1fr)); gap:18px; align-items:stretch}
+  .slot{height:100%}
+}
+@media (min-width:1500px){
+  body{font-size:17px}
+}
+
+
+/* purpose */
+.purpose{background:var(--surface); border:1px solid var(--line); border-left:5px solid var(--leaf); border-radius:18px; padding:18px 20px; display:flex; flex-direction:column; gap:8px}
+.purpose .eyebrow{color:var(--muted)}
+.purpose p.stmt{font-family:var(--f-display); font-weight:700; font-size:clamp(1.15rem,2vw,1.6rem); line-height:1.3; text-wrap:balance}
+@media (min-width:900px){ .wrap > .purpose{grid-column:1 / -1; height:auto} }
+
 /* kit + sources */
 .kit h2, .sources h2{font-size:1.6rem; margin-bottom:10px}
 .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0; padding:0; list-style:none}
@@ -194,7 +216,7 @@ button:focus-visible, summary:focus-visible{outline:3px solid var(--sun); outlin
 .tracker{position:fixed; left:0; right:0; bottom:0; background:var(--surface); border-top:1px solid var(--line);
   padding-top:8px; padding-bottom:calc(8px + env(safe-area-inset-bottom, 0px));
   padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px))}
-.tracker-in{max-width:680px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:nowrap}
+.tracker-in{max-width:1440px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:nowrap}
 .tracker .count{font-weight:600; font-size:15px; white-space:nowrap}
 .leaves{display:flex; gap:3px}
 .leaves svg{width:18px; height:18px; fill:var(--line); transition:fill .3s, transform .3s}
@@ -278,6 +300,11 @@ button:focus-visible, summary:focus-visible{outline:3px solid var(--sun); outlin
       </svg>
     </div>
   </header>
+
+  <section class="purpose" aria-labelledby="purpose-h">
+    <p class="eyebrow" id="purpose-h">Our purpose</p>
+    <p class="stmt">To make sustainability a daily habit through small, mindful digital choices that conserve energy, reduce digital clutter, and create a greener workplace.</p>
+  </section>
 
   <section class="habits" aria-label="Our three habits">
     <p class="eyebrow">Our three habits</p>
